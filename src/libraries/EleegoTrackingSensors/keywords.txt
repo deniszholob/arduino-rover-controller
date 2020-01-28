@@ -1,0 +1,5 @@
+TrackSensorVals           KEYWORD1
+TrackingSensorsClass      KEYWORD1
+setTrackingSensorPins     KEYWORD2
+readTrackingSensorValues  KEYWORD2
+printTrackingSensorValues KEYWORD2
