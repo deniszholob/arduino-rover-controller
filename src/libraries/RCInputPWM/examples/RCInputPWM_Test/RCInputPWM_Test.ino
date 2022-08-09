@@ -21,7 +21,7 @@ int rx_pwm_signal[RX_CHANNELS];
 // ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
 // ================================================================================================================
-void setup() {  
+void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
   

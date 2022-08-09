@@ -1,7 +1,7 @@
 /* ===================================
  * Dual H-bridge motor controller library
  * ===================================
- * Contains functions to use with the IR Tracking Sensors
+ * Contains functions to control an h-bridge motor board
  *
  * @author Denis Zholob
  */
@@ -102,7 +102,7 @@ void DualHBridgeController::activateHbridgeLeft(int matrix_index, int duty_cycle
   digitalWrite(PIN_MOTOR_LEFT_LOGIC2,  h_bridge_motor_spin_state[matrix_index][1]);
 
   // Set motor rotation speed
-  // If state is stopped set pin low to elimintate pwm whine
+  // If state is stopped set pin low to eliminate pwm whine
   if(matrix_index == MOTOR_STATE_STOP){
     digitalWrite(PIN_MOTOR_LEFT_SPEED, 0);
   } else {

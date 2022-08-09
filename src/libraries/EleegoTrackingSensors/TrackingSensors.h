@@ -19,9 +19,9 @@
 // ================================================================================================================
 
 // Tracking Sensor Pins (IR)
-#define PIN_TRACKING_SENSOR_L A0 //Previous Diginal 11
-#define PIN_TRACKING_SENSOR_M A1 //Previous Diginal 4
-#define PIN_TRACKING_SENSOR_R A2 //Previous Diginal 2
+#define PIN_TRACKING_SENSOR_L A0 // Previous Digital 11
+#define PIN_TRACKING_SENSOR_M A1 // Previous Digital 4
+#define PIN_TRACKING_SENSOR_R A2 // Previous Digital 2
 
 // Structure to hold values for tracking sensors  Left, Middle, Right
 struct TrackSensorVals {

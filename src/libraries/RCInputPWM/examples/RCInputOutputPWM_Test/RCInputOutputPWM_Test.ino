@@ -63,7 +63,7 @@ void setup() {
   
   // Do not go into the main loop unless throttle is low and RX is on
   setup_ThrottleSafety();
-  //Start Loop
+  // Start Loop
   start = 0;
   digitalWrite(LED_PIN, LOW);                        // Turn off the led.
   Serial.print("Setup Done!");
@@ -133,20 +133,19 @@ void setup_ThrottleSafety(){
     readPWMIn(rx_pwm_signal);
     
   // Wait/Loop until the receiver is active and the throttle is set to the lower position.
-  while(//rx_pwm_signal[2] < (990) ||    // RX is not ON (thus signal should be 0 as its hasn't caused interrupt)
-        !(rx_pwm_signal[2] < (1050) &&
-        rx_pwm_signal[3] < (1050))
-        ){    // Throttle not off
+  while(
+    //rx_pwm_signal[2] < (990) ||    // RX is not ON (thus signal should be 0 as its hasn't caused interrupt)
+    !(rx_pwm_signal[2] < (1050) &&
+      rx_pwm_signal[3] < (1050))
+  ){ // Throttle not off
     start ++;                                       // While waiting increment start with every loop.
-    
+
     // We don't want the esc's to be beeping annoyingly. So let's give them a 1000us pulse while waiting for the receiver inputs.
-    
-    
     delay(3);                                        // Wait 3 milliseconds before the next loop.
     if(start == 125){                                // Every 125 loops (500ms).
       digitalWrite(LED_PIN, !digitalRead(LED_PIN));  // Change the led status.
       start = 0;                                     // Start again at 0.
-    }   
+    }
     Serial.print("Safety ");
     Serial.println(start);
     readPWMIn(rx_pwm_signal);

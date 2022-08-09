@@ -17,8 +17,10 @@
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
 // ================================================================================================================
-#define CAR_TRIM 0      // Compensate left turn
-#define CAR_DEADBAND 40 // Ger rid of PWM whine on low values, where car doesnt even move, so stop it completely
+#define CAR_TRIM 0        // Compensate left turn
+#define CAR_DEADBAND 40   // Ger rid of PWM whine on low values, where car doesn't even move, so stop it completely
+#define RC_CH_DIRECTION 0 // FOrward/Backward Radio Channel From RCInputPWM
+#define RC_CH_TURN 3      // Left/Right Radio Channel From RCInputPWM
 
 // ================================================================================================================
 // Declaring Objects
@@ -29,16 +31,17 @@ DualHBridgeController Car;
 // Declaring Variables
 // ================================================================================================================
 bool initialized = false;
+int rx_pwm_signal[RX_CHANNELS];
 
 // ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
 // ================================================================================================================
-void setup() {  
+void setup() {
   // Open the serial port and set the baud rate to 9600
   // Serial.begin(9600);
 
   // Tell board which pins are used for RC input
-  setup_setRCPWMInteruptPins();
+  setupRCPWMInterruptPins();
 
   // Tell board which pins are used for h-bridge motor board
   Car.setHBridgePins();
@@ -46,7 +49,7 @@ void setup() {
   // Trim the car so it goes straight if mechanical alignment of motors is off.
   Car.setTrim(CAR_TRIM);
 
-  // Motor board placed opposide car direction
+  // Motor board placed opposite car direction
   Car.setReverseDirection(true);
 
   // Set deadband
@@ -65,10 +68,13 @@ void loop() {
     Car.activateMotors(0, 0);
     delay(1000);
     initialized = true;
-  }else{
+  } else {
+    // Read RC Input
+    readPWMIn(rx_pwm_signal);
+    int velocity = pwmToAnalogSignal(flipSignal(rx_pwm_signal[RC_CH_DIRECTION]));
+    int turn = pwmToAnalogSignal(rx_pwm_signal[RC_CH_TURN]);
+    // printRCPWMValues()
     // Move the car
-    int velocity = pwmToAnalogSignal(flipSignal(rx_signal[1]));
-    int turn = pwmToAnalogSignal(rx_signal[3]);
     Car.activateMotors(velocity, turn);
   }
 }
