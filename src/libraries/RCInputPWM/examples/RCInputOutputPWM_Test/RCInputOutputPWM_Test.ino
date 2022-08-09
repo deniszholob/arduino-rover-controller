@@ -51,7 +51,7 @@ void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
   // Tell board which pins are used for RC input
-  setupRCPWMInteruptPins();
+  setupRCPWMInterruptPins();
 
   // Attach servo on defined pin to servo object
   m1.attach(PIN_M1);
@@ -123,7 +123,7 @@ int boundedPWM(int pwm){
 }
 
 
-// Keeps program stuck here untill RX is on and throttle is Low
+// Keeps program stuck here until RX is on and throttle is Low
 // ESC are set to 1000us, LED is blinking
 void setup_ThrottleSafety(){
     m1.writeMicroseconds(PWM_MIN);
@@ -132,12 +132,12 @@ void setup_ThrottleSafety(){
     delay(100);
     readPWMIn(rx_pwm_signal);
     
-  // Wait/Loop until the receiver is active and the throtle is set to the lower position.
-  while(//rx_pwm_signal[2] < (990) ||    // RX is not ON (thus signal should be 0 as its hasnt caused interrupt)
+  // Wait/Loop until the receiver is active and the throttle is set to the lower position.
+  while(//rx_pwm_signal[2] < (990) ||    // RX is not ON (thus signal should be 0 as its hasn't caused interrupt)
         !(rx_pwm_signal[2] < (1050) &&
         rx_pwm_signal[3] < (1050))
         ){    // Throttle not off
-    start ++;                                       // While waiting increment start whith every loop.
+    start ++;                                       // While waiting increment start with every loop.
     
     // We don't want the esc's to be beeping annoyingly. So let's give them a 1000us pulse while waiting for the receiver inputs.
     

@@ -26,7 +26,7 @@ void setup() {
   Serial.begin(9600);
   
   // Tell board which pins are used for RC input
-  setupRCPWMInteruptPins();
+  setupRCPWMInterruptPins();
 }
 
 // ================================================================================================================
@@ -34,8 +34,8 @@ void setup() {
 // ================================================================================================================
 void loop() {
   readPWMIn(rx_pwm_signal);
-//  printRCPWMValues();
-   printRCPWMValuesSimple();
+//  printRCPWMValues(); // From RCInputPWM.cpp
+  printRCPWMValuesSimple();
 }
 
 // Prints out PWM Values for each channel

@@ -35,7 +35,7 @@ void setup() {
   // Trim the car so it goes straight if mechanical alignment of motors is off.
   Car.setTrim(CAR_TRIM);
 
-  // Motor board placed opposide car direction
+  // Motor board placed opposite car direction
   Car.setReverseDirection(true);
 }
 
