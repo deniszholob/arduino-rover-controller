@@ -8,12 +8,16 @@ For Autonomous RC Car Example
 ## Set up/Wire up the hardware
 See [Pin Table](./PinTable.md) for wiring reference to the arduino/sensor shield
 
+* Connect motors to the motor controller and logic cables out
+  ![Rover Motor Controller](images/20220809_002405_HDR.jpg)
+* Connect logic from the motor controller to the arduino sensor shield
+  ![Arduino + RC Receiver Connection](images/arduino-rc-receiver-connection.jpg)
 * ![Autonomous RC Car2](images/IMG_0034.jpg)
-* ![Rover Motor Controller](images/IMG_20170827_192908.jpg)
-* ![Rover Motor Controller2](images/20220809_002405_HDR.jpg)
-* ![Motor Controller Layout](images/IMG_0533-1.jpg)
+
+### Pinouts
+* ![Motor Controller Layout](images/l298n-motor-controller-pinout.jpg)
 * ![Arduino Sensor Shield Layout](images/Arduino_Sensor_Shield.png)
-* ![Arduino Layout](images/Arduino%20328P%20Pinout%20Diagram.png)
+* ![Arduino Layout](images/Arduino-328P-Pinout-Diagram.png)
 
 ## Set up the software
 There are several scrips for the rovers:

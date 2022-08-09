@@ -5,7 +5,12 @@
  *
  * @author Denis Zholob
  */
- 
+
+// ================================================================================================================
+// Importing Libraries
+// ================================================================================================================
+#include <Arduino.h>
+
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
 // ================================================================================================================
@@ -16,7 +21,7 @@
 #define MOTOR_RIGHT_LOGIC2_PIN 9  // IN4
 #define MOTOR_RIGHT_SPEED_PIN 10  // ENB
 
-// Indecies for drive matrix below
+// Indicies for drive matrix below
 #define MATRIX_STOP 0
 #define MATRIX_FORWARD 1
 #define MATRIX_BACK 2
@@ -26,19 +31,19 @@
 // IN1, IN2, IN3, IN4
 const int drive_matrix[5][4] = {
   {0, 0, 0, 0}, // MATRIX_STOP
-  {0, 1, 0, 1}, // MATRIX_FORWARD: Left and Right go same direction
-  {1, 0, 1, 0}, // MATRIX_BACK: Left and right go same direction
-  {0, 1, 1, 0}, // MATRIX_RIGHT: Left forward, Right Back
-  {1, 0, 0, 1}  // LMATRIX_LEFT: Right forward, Left Back
+  {1, 0, 1, 0}, // MATRIX_FORWARD: Left and right go same direction
+  {0, 1, 0, 1}, // MATRIX_BACK:    Left and Right go same direction
+  {0, 1, 1, 0}, // MATRIX_RIGHT:   Left forward, Right Back
+  {1, 0, 0, 1}  // MATRIX_LEFT:    Right forward, Left Back
 };
 
 // ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
 // ================================================================================================================
 void setup() {
-  //Open the serial port and set the baud rate to 9600
+  // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
-   
+
   // Set the defined pins to the output
   pinMode(MOTOR_LEFT_SPEED_PIN,   OUTPUT);
   pinMode(MOTOR_LEFT_LOGIC1_PIN,  OUTPUT);
@@ -98,14 +103,14 @@ int getSpeed(int percent){
   return map(percent, 0, 100, 0, 255);
 }
 
-// Truns On/Off motors base on the valus on the drive_matrix
+// Turns On/Off motors base on the values on the drive_matrix
 // @param matrix_index Which drive mode to apply (integer value as index into the drive_matrix array)
 // @param duty_cycle value b/w 0-255 makes the motors spin slow or fast
 void activateMotors(int matrix_index, int duty_cycle){
   if(duty_cycle){
     analogWrite(MOTOR_LEFT_SPEED_PIN, duty_cycle);
     analogWrite(MOTOR_RIGHT_SPEED_PIN, duty_cycle);
-  }else{
+  } else {
     digitalWrite(MOTOR_LEFT_SPEED_PIN, 0);
     digitalWrite(MOTOR_RIGHT_SPEED_PIN, 0);
   }
@@ -139,4 +144,3 @@ void car_Right(int duty_cycle){
 void car_Left(int duty_cycle){
   activateMotors(MATRIX_LEFT, duty_cycle);
 }
-

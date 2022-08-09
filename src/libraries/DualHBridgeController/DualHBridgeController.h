@@ -19,13 +19,14 @@
 // ================================================================================================================
 
 // Left Motor Pins
-#define PIN_MOTOR_LEFT_SPEED   3  // ENA
-#define PIN_MOTOR_LEFT_LOGIC1  9  // IN1
-#define PIN_MOTOR_LEFT_LOGIC2  8  // IN2
-// Left Motor Pins
-#define PIN_MOTOR_RIGHT_LOGIC1 7  // IN3
-#define PIN_MOTOR_RIGHT_LOGIC2 6  // IN4
-#define PIN_MOTOR_RIGHT_SPEED  5  // ENB
+#define PIN_MOTOR_LEFT_SPEED   5  // ENA
+#define PIN_MOTOR_LEFT_LOGIC1  6  // IN1
+#define PIN_MOTOR_LEFT_LOGIC2  7  // IN2
+
+// Right Motor Pins
+#define PIN_MOTOR_RIGHT_LOGIC1 8  // IN3
+#define PIN_MOTOR_RIGHT_LOGIC2 9  // IN4
+#define PIN_MOTOR_RIGHT_SPEED  10 // ENB
 
 // Analog Signals
 #define ANALOG_OUT_MIN 0      // 
