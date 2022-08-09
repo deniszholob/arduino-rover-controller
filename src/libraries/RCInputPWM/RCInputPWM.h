@@ -1,7 +1,7 @@
 /* ===================================
  * RC PWM Input library
  * ===================================
- * Reads PWM inputs from RC reciever
+ * Reads PWM inputs from RC receiver
  *
  * @author Denis Zholob
  *
@@ -29,7 +29,7 @@
 
 // #define BIT_SHIFT(count) (1 << count)
 
-// PWM Pins (servo/esc control)
+// PWM Pins (Output PDW => servo/esc control/etc...)
 // 11   PCINT3    PB3
 // 10   PCINT2    PB2
 // 9    PCINT1    PB1
@@ -37,13 +37,13 @@
 // 5    PCINT21   PD5
 // 3    PCINT19   PD3
 
-// Non PWM Pins
+// Non PWM Pins (Can use to read PWM)
 // 13   PCINT5    PB5   // LED
 // 12   PCINT4    PB4
 // 8    PCINT0    PB0
 // 7    PCINT23   PD7
 // 4    PCINT20   PD4
-// 2    PCINT18   PD2   // Interupt pin (for IMU)
+// 2    PCINT18   PD2   // Interrupt pin (for IMU)
 
 // Analog Pins
 // A0   PCINT8    PC5
@@ -53,7 +53,7 @@
 // A4   PCINT12   PC1   // SDA
 // A5   PCINT13   PC0   // SCL
 
-void setupRCPWMInteruptPins();
+void setupRCPWMInterruptPins();
 void readPWMIn(int *rx_pwm_signal);
 void printRCPWMValues();
 

@@ -1,7 +1,7 @@
 /* ===================================
  * RC PWM Input library
  * ===================================
- * Reads PWM inputs from RC reciever
+ * Reads PWM inputs from RC receiver
  *
  * @author Denis Zholob
  *
@@ -43,8 +43,8 @@ void interruptCalcPWM(int i, int port_pin);
 // Functions
 // ================================================================================================================
 
-// 
-void setupRCPWMInteruptPins(){
+// Use in setup to activate pins for input
+void setupRCPWMInterruptPins(){
   // NOTE: Arduino Uno pins default to inputs, so they don't need to be explicitly declared as inputs
   // Set up Interrupt Pins (to read in RC PWM input)
   PCICR |= (1 << PCIE0);                             // set PCIE0 to enable PCMSK0 scan
@@ -58,7 +58,7 @@ void setupRCPWMInteruptPins(){
   // PCMSK2 |= (1 << PCINT18);                          // set PCINT18 (digital input  2) to trigger an interrupt on state change
 }
 
-// 
+// Writes `microsecond values for PWM signals from the RC receiver` to the passed in `int rx_pwm_signal[RX_CHANNELS];` variable
 void readPWMIn(int *rx_pwm_signal){
   noInterrupts(); // turn interrupts off quickly while we take local copies of the shared variables
   for (int i = 0; i < RX_CHANNELS; ++i){
@@ -112,26 +112,26 @@ void interruptCalcPWM(int i, int port_pin){
 // Print out PWM Values and the directions
 void printRCPWMValues() {
   Serial.print("Roll:");
-  if (rx_signal[0] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       //RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[0] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  //RCPWM - 1520 if Deadband is 20
+  if (rx_signal[0] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[0] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
   Serial.print(rx_signal[0]);
 
   Serial.print("  Pitch:");
-  if (rx_signal[1] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("^^^");       //RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[1] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("vvv");  //RCPWM - 1520 if Deadband is 20
+  if (rx_signal[1] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("^^^");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[1] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("vvv");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
   Serial.print(rx_signal[1]);
 
   Serial.print("  Throttle:");
-  if (rx_signal[2] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("vvv");       //RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[2] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("^^^");  //RCPWM - 1520 if Deadband is 20
+  if (rx_signal[2] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("vvv");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[2] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("^^^");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
   Serial.print(rx_signal[2]);
 
   Serial.print("  Yaw:");
-  if (rx_signal[3] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       //RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[3] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  //RCPWM - 1520 if Deadband is 20
+  if (rx_signal[3] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[3] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
   Serial.println(rx_signal[3]);
 }

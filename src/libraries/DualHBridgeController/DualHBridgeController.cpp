@@ -25,7 +25,7 @@ void DualHBridgeController::setHBridgePins(){
   pinMode(PIN_MOTOR_RIGHT_LOGIC2, OUTPUT);
 }
 
-// Reverse the motor direction if motor polarity was pysically reversed
+// Reverse the motor direction if motor polarity was physically reversed
 void DualHBridgeController::setReverseDirection(bool reverse){
   _reverse_motor_direction = reverse;
 }
@@ -36,7 +36,7 @@ void DualHBridgeController::setTrim(int trim){
   _turn_trim = boundSignal(trim);
 }
 
-// Deadband value witch wich within the car is stopped
+// Deadband value witch which within the car is stopped
 // Depends on the power setup and personal preference
 // Acceptable value set: (0, 255)
 // Recommended values: (~10, ~40)
@@ -44,7 +44,7 @@ void DualHBridgeController::setDeadband(int deadband){
   _deadband = boundSignal(deadband);
 }
 
-// Truns the motors based on the input
+// Turns the motors based on the input
 // @param velocity desired car velocity; acceptable value set: (-255, 255)
 // @param turn desired turn amount to mix with car velocity; acceptable value set: (-255, 255)
 void DualHBridgeController::activateMotors(int velocity, int turn){
@@ -105,7 +105,7 @@ void DualHBridgeController::activateHbridgeLeft(int matrix_index, int duty_cycle
   // If state is stopped set pin low to elimintate pwm whine
   if(matrix_index == MOTOR_STATE_STOP){
     digitalWrite(PIN_MOTOR_LEFT_SPEED, 0);
-  }else{
+  } else {
     analogWrite(PIN_MOTOR_LEFT_SPEED, duty_cycle);
   }
 }
@@ -115,12 +115,12 @@ void DualHBridgeController::activateHbridgeRight(int matrix_index, int duty_cycl
   // Set motor rotation direction
   digitalWrite(PIN_MOTOR_RIGHT_LOGIC1,  h_bridge_motor_spin_state[matrix_index][0]);
   digitalWrite(PIN_MOTOR_RIGHT_LOGIC2,  h_bridge_motor_spin_state[matrix_index][1]);
- 
+
   // Set motor rotation speed
-  // If state is stopped set pin low to elimintate pwm whine
+  // If state is stopped set pin low to eliminate pwm whine
   if(matrix_index == MOTOR_STATE_STOP){
     digitalWrite(PIN_MOTOR_RIGHT_SPEED, 0);
-  }else{
+  } else {
     analogWrite(PIN_MOTOR_RIGHT_SPEED, duty_cycle);
   }
 }
