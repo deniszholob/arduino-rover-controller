@@ -5,7 +5,7 @@
  *
  * @author Denis Zholob
  */
- 
+
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
@@ -79,7 +79,7 @@ void setup() {
   // Set the defined Ultrasonic pins to the output
   pinMode(PIN_ULTRASONIC_ECHO, INPUT);  // Sets the Echo Pin as an Input
   pinMode(PIN_ULTRASONIC_TRIG, OUTPUT); // Sets the Trig Pin as an Output
-   
+
   // Set the defined motor pins to the output
   pinMode(PIN_MOTOR_LEFT_SPEED,   OUTPUT);
   pinMode(PIN_MOTOR_LEFT_LOGIC1,  OUTPUT);
@@ -191,7 +191,11 @@ void distanceTest(){
 }
 
 /**
-  * The standard deviation filter performs a single-point based elimination.  If the difference between the last and current readings is greater than the specified value and the last reading was not eliminated, the last reading is returned and the elimination flag is set.  Otherwise, the current reading is returned and the elimination flag is unset.  The algorithm will never eliminate two successive readings.
+  * The standard deviation filter performs a single-point based elimination.
+  * If the difference between the last and current readings is greater than the specified value and the last reading was not eliminated,
+  * the last reading is returned and the elimination flag is set.
+  * Otherwise, the current reading is returned and the elimination flag is unset.
+  * The algorithm will never eliminate two successive readings.
   */
 int stdevEliminationFilter(int sensor, int current) {
   // Static variables to hold the last value information
