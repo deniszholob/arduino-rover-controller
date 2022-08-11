@@ -1,4 +1,5 @@
 # How to Program the Arduino Boards
+* ![Autonomous RC Car2](images/rc-rover-top.jpg)
 
 ## Hidden Files in VSCode
 Some files are hidden in vscode by default, see the `files.exclude` option in the [settings file](.vscode/settings.json)

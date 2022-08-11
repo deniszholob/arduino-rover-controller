@@ -1,6 +1,6 @@
 # Arduino "Rover" Controller
 Arduino controllers for various land based vehicles
-![Autonomous RC Car1](images/IMG_0036.jpg)
+![RC Rover](images/rc-rover.jpg)
 
 ## Usage
 For Autonomous RC Car Example
@@ -9,10 +9,10 @@ For Autonomous RC Car Example
 See [Pin Table](./PinTable.md) for wiring reference to the arduino/sensor shield
 
 * Connect motors to the motor controller and logic cables out
-  ![Rover Motor Controller](images/20220809_002405_HDR.jpg)
+  ![Rover Motor Controller](images/rc-rover-motor-controller.jpg)
 * Connect logic from the motor controller to the arduino sensor shield
-  ![Arduino + RC Receiver Connection](images/arduino-rc-receiver-connection.jpg)
-* ![Autonomous RC Car2](images/IMG_0034.jpg)
+  ![Arduino + motor + RC Receiver Connection](images/arduino-connection-motors-rc-receiver.jpg)
+  ![Arduino + sensors Connection](images/arduino-connection-sensors.jpg)
 
 ### Pinouts
 * ![Motor Controller Layout](images/l298n-motor-controller-pinout.jpg)
