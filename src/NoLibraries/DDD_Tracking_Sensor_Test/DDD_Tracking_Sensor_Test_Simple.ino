@@ -21,8 +21,8 @@
 #define PIN_TRACKING_SENSOR_R A2
 
 // Indicies for tracking sensor array below
-#define SENSOR_TRACKING_LEFT 0
-#define SENSOR_TRACKING_MID 1
+#define SENSOR_TRACKING_LEFT  0
+#define SENSOR_TRACKING_MID   1
 #define SENSOR_TRACKING_RIGHT 2
 
 // Tracking sensor values   L, M, R
@@ -37,9 +37,9 @@ void setup() {
   Serial.begin(9600);
 
   // Tracking IR Sensors
-  pinMode(PIN_TRACKING_SENSOR_R,   INPUT);
-  pinMode(PIN_TRACKING_SENSOR_M,   INPUT);
-  pinMode(PIN_TRACKING_SENSOR_L,   INPUT);
+  pinMode(PIN_TRACKING_SENSOR_R, INPUT);
+  pinMode(PIN_TRACKING_SENSOR_M, INPUT);
+  pinMode(PIN_TRACKING_SENSOR_L, INPUT);
 }
 
 // ================================================================================================================
@@ -53,13 +53,13 @@ void loop() {
 // ================================================================================================================
 // Helper Functions
 // ================================================================================================================
-void readTrackingSensors(){
-  track_sensor_vals[SENSOR_TRACKING_LEFT]  = digitalRead(PIN_TRACKING_SENSOR_L);
-  track_sensor_vals[SENSOR_TRACKING_MID]   = digitalRead(PIN_TRACKING_SENSOR_M);
+void readTrackingSensors() {
+  track_sensor_vals[SENSOR_TRACKING_LEFT] = digitalRead(PIN_TRACKING_SENSOR_L);
+  track_sensor_vals[SENSOR_TRACKING_MID] = digitalRead(PIN_TRACKING_SENSOR_M);
   track_sensor_vals[SENSOR_TRACKING_RIGHT] = digitalRead(PIN_TRACKING_SENSOR_R);
 }
 
-void printSensorValues(){
+void printSensorValues() {
   Serial.print("Left: ");
   Serial.print(track_sensor_vals[SENSOR_TRACKING_LEFT]);
   Serial.print("  Mid: ");

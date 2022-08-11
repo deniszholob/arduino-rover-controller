@@ -1,4 +1,7 @@
 {
+  "workbench.iconTheme": "material-icon-theme",
+  "explorer.sortOrderLexicographicOptions": "lower", // Case sensitive file ordering in tree
+  "editor.renderWhitespace": "all",
   "editor.rulers": [
     140
   ],
@@ -6,5 +9,11 @@
   "cSpell.words": [
     "DEADBAND",
     "Zholob"
-  ]
+  ],
+  "files.exclude": {
+    "**/.clang-format": true,
+    "**/.editorconfig": true,
+    "**/.gitignore": true,
+    "**/LICENSE": true
+  }
 }

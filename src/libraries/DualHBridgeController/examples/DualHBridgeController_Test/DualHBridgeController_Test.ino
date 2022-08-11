@@ -10,8 +10,9 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
-#include <Arduino.h>
 #include "DualHBridgeController.h"
+
+#include <Arduino.h>
 
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
@@ -51,7 +52,7 @@ void loop() {
 }
 
 // Test Uncoupled car movements (Pure Forward/Back, Turns, and Stops)
-void carUncoupledMotion(){
+void carUncoupledMotion() {
   // Go forward
   Serial.println("Forward");
   Car.activateMotors(200, 0);
@@ -94,7 +95,7 @@ void carUncoupledMotion(){
 }
 
 // Test coupled motions
-void carCoupledMotion(){
+void carCoupledMotion() {
   // Go forward-right
   Serial.println("Forward-Right");
   Car.activateMotors(200, 50);
