@@ -19,14 +19,14 @@
 // ================================================================================================================
 
 // Left Motor Pins
-#define PIN_MOTOR_LEFT_SPEED   5  // ENA
-#define PIN_MOTOR_LEFT_LOGIC1  6  // IN1
-#define PIN_MOTOR_LEFT_LOGIC2  7  // IN2
+#define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
+#define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple) 
+#define PIN_MOTOR_LEFT_LOGIC2  3  // IN2 (blue)   
 
 // Right Motor Pins
-#define PIN_MOTOR_RIGHT_LOGIC1 8  // IN3
-#define PIN_MOTOR_RIGHT_LOGIC2 9  // IN4
-#define PIN_MOTOR_RIGHT_SPEED  10 // ENB
+#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)  
+#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow) 
+#define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
 
 // Analog Signals
 #define ANALOG_OUT_MIN 0      // 
@@ -44,15 +44,17 @@ class DualHBridgeController {
     // DualHBridgeController();
     // ~DualHBridgeController();
     void setHBridgePins();
-    void setTrim(int trim);
+    void setDebug(bool debug);
     void setDeadband(int deadband);
+    void setTrim(int trim);
     void setReverseDirection(bool reverse);
     void activateMotors(int velocity, int turn);
 
   private:
     bool _reverse_motor_direction = false;
-    int _turn_trim = 0;
+    bool _debug = false;
     int _deadband = 10;
+    int _turn_trim = 0;
     const int h_bridge_motor_spin_state[3][2] = {
       {0, 0}, // MOTOR_STATE_STOP
       {0, 1}, // MOTOR_STATE_FWD Spins Forward (CCW)
@@ -62,6 +64,7 @@ class DualHBridgeController {
     int boundSignal(int val);
     void activateHbridgeLeft(int matrix_index, int duty_cycle);
     void activateHbridgeRight(int matrix_index, int duty_cycle);
+    void printCarValues(int vL,int vR, int tL, int tR);
 };
 
 #endif

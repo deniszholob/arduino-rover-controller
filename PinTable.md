@@ -1,26 +1,57 @@
-# Double check these pins in code
+# Double check these pins match in code and board
 
-| Sensor                        | Pin   | Original  | Pin   |
-|-------------------------------|-------|-----------|-------|
-| Tracking Sensor L             | A0    | Original  | 11    |
-| Tracking Sensor M             | A1    | Original  |  4    |
-| Tracking Sensor R             | A2    | Original  |  2    |
+| Sensor                        | Pin   |
+|-------------------------------|-------|
+| Tracking Sensor L             | A0    |
+| Tracking Sensor M             | A1    |
+| Tracking Sensor R             | A2    |
 |
-| Ultrasonic Echo - yellow      | A4    | Original  | A4?   |
-| Ultrasonic Trigger - orange   | A5    | Original  | A5?   |
+| Ultrasonic Echo - yellow      | A4    |
+| Ultrasonic Trigger - orange   | A5    |
 |
-| Servo (y/r/b)                 | 10    | Original  |  3    |
+| M_A-Enable (gray)    (PWM)    |  5    |
+| M_A-In1    (purple)           |  2    |
+| M_A-In2    (blue)             |  3    |
+| M_B-In3    (green)            |  9    |
+| M_B-In4    (yellow)           | 10    |
+| M_B-Enable (orange)  (PWM)    |  6    |
 |
-| M_A-Enable (gray)             |  3    | Original  |  6    |
-| M_A-In1    (purple)           |  9    | Original  |  7    |
-| M_A-In2    (blue)             |  8    | Original  |  5    |
-| M_B-In3    (green)            |  7    | Original  |  4    |
-| M_B-In4    (yellow)           |  6    | Original  |  2    |
-| M_B-Enable (orange)           |  5    | Original  |  3    |
+| Servo (y/r/b)                 | 11    |
 |
-| IR Sensor (w/r/b)             | 12    | Original  | 12    |
+| IR Sensor (w/r/b)             | 12    |
 |
-| RC PWM Ch1                    | 12    | Original  | n/a   |
-| RC PWM Ch2                    |  4    | Original  | n/a   |
+| RC PWM Ch1 (Roll)             |  4    |
+| RC PWM Ch2 (Pitch)            |  7    |
+| RC PWM Ch3 (Throttle)         |  8    |
+| RC PWM Ch4 (Yaw)              | 12    |
 |
-| IMU                           |  2    | Original  | n/a   |
+| IMU                           |  2    |
+
+# Notes:
+* Pin 0 and 1 are Rx/Tx reserved for usb, and do not work unless specifically disabled https://forum.arduino.cc/t/digitalwrite-pins-0-and-1/24691/6
+* Servo library disabled PWM on pins 10 and 9 https://www.arduino.cc/reference/en/libraries/servo/
+* analogWrite() uses PWM pins https://www.arduino.cc/reference/en/language/functions/analog-io/analogwrite/
+
+PWM Pins (Output PDW => servo/esc control/etc...)
+11   PCINT3    PB3
+10   PCINT2    PB2
+9    PCINT1    PB1
+6    PCINT22   PD6
+5    PCINT21   PD5
+3    PCINT19   PD3
+
+Non PWM Pins (Can use to read PWM)
+13   PCINT5    PB5   // LED
+12   PCINT4    PB4
+8    PCINT0    PB0
+7    PCINT23   PD7
+4    PCINT20   PD4
+2    PCINT18   PD2   // Interrupt pin (for IMU)
+
+Analog Pins
+A0   PCINT8    PC5
+A1   PCINT9    PC4
+A2   PCINT10   PC3
+A3   PCINT11   PC2
+A4   PCINT12   PC1   // SDA
+A5   PCINT13   PC0   // SCL

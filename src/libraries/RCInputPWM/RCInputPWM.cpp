@@ -110,26 +110,26 @@ void interruptCalcPWM(int i, int port_pin){
 // Print out PWM Values and the directions
 void printRCPWMValues() {
   Serial.print("Roll:");
-  if (rx_signal[0] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[0] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
+  if (rx_signal[RC_CH_IDX_ROLL] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[RC_CH_IDX_ROLL] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
-  Serial.print(rx_signal[0]);
+  Serial.print(rx_signal[RC_CH_IDX_ROLL]);
 
   Serial.print("  Pitch:");
-  if (rx_signal[1] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("^^^");       // RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[1] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("vvv");  // RCPWM - 1520 if Deadband is 20
+  if (rx_signal[RC_CH_IDX_PITCH] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("^^^");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[RC_CH_IDX_PITCH] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("vvv");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
-  Serial.print(rx_signal[1]);
+  Serial.print(rx_signal[RC_CH_IDX_PITCH]);
 
   Serial.print("  Throttle:");
-  if (rx_signal[2] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("vvv");       // RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[2] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("^^^");  // RCPWM - 1520 if Deadband is 20
+  if (rx_signal[RC_CH_IDX_THROTTLE] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("vvv");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[RC_CH_IDX_THROTTLE] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print("^^^");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
-  Serial.print(rx_signal[2]);
+  Serial.print(rx_signal[RC_CH_IDX_THROTTLE]);
 
   Serial.print("  Yaw:");
-  if (rx_signal[3] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
-  else if (rx_signal[3] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
+  if (rx_signal[RC_CH_IDX_YAW] - (PWM_MID-PWM_DEADBAND) < 0)Serial.print("<<<");       // RCPWM - 1480 if Deadband is 20
+  else if (rx_signal[RC_CH_IDX_YAW] - (PWM_MID+PWM_DEADBAND) > 0)Serial.print(">>>");  // RCPWM - 1520 if Deadband is 20
   else Serial.print("-+-");
-  Serial.println(rx_signal[3]);
+  Serial.println(rx_signal[RC_CH_IDX_YAW]);
 }

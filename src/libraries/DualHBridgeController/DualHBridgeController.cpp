@@ -30,10 +30,8 @@ void DualHBridgeController::setReverseDirection(bool reverse){
   _reverse_motor_direction = reverse;
 }
 
-// Trim the turning to keep the car going straight
-// Acceptable value set: (-255, 255)
-void DualHBridgeController::setTrim(int trim){
-  _turn_trim = boundSignal(trim);
+void DualHBridgeController::setDebug(bool debug){
+  _debug = debug;
 }
 
 // Deadband value witch which within the car is stopped
@@ -44,20 +42,30 @@ void DualHBridgeController::setDeadband(int deadband){
   _deadband = boundSignal(deadband);
 }
 
+// Trim the turning to keep the car going straight
+// Acceptable value set: (-255, 255)
+void DualHBridgeController::setTrim(int trim){
+  _turn_trim = boundSignal(trim);
+}
+
 // Turns the motors based on the input
 // @param velocity desired car velocity; acceptable value set: (-255, 255)
 // @param turn desired turn amount to mix with car velocity; acceptable value set: (-255, 255)
 void DualHBridgeController::activateMotors(int velocity, int turn){
   // Reverse motor direction if flag is set.
-  // No need to reverse the turn as that is cw or ccw so its the same regardles of the car direction.
+  // No need to reverse the turn as that is cw or ccw so its the same regardless of the car direction.
   if(_reverse_motor_direction){
     velocity *= -1;
   }
 
-  int velocity_left = velocity + turn + _turn_trim;    // Increase left motor speed to turn right
-  int velocity_right = velocity - turn - _turn_trim;   // Increase right motor speed to turn left
-  int speed_left = boundSignal(abs(velocity_left));
-  int speed_right = boundSignal(abs(velocity_right));
+  int velocity_left = velocity + (turn + _turn_trim);   // Increase left motor speed to turn right
+  int velocity_right = velocity - (turn + _turn_trim);  // Increase right motor speed to turn left
+  int speed_left = boundSignal(abs(velocity_left));   // Bounded Left Velocity
+  int speed_right = boundSignal(abs(velocity_right)); // Bounded Right Velocity
+
+  if(_debug){
+    printCarValues(speed_left, speed_right, velocity_left, velocity_right);
+  }
 
   // --- Left Motor --- //
   // Rotate Forward
@@ -123,4 +131,23 @@ void DualHBridgeController::activateHbridgeRight(int matrix_index, int duty_cycl
   } else {
     analogWrite(PIN_MOTOR_RIGHT_SPEED, duty_cycle);
   }
+}
+
+
+// ================================================================= //
+// ======================= DEBUG Output ============================ //
+// ================================================================= //
+
+// Print out PWM Values and the directions
+void DualHBridgeController::printCarValues(int vL,int vR, int sL, int sR) {
+  Serial.print("Speed(L/R): ");
+  Serial.print(vL);
+  Serial.print("/");
+  Serial.print(vR);
+
+  Serial.print("   Velocity(L/R): ");
+  Serial.print(sL);
+  Serial.print("/");
+  Serial.print(sR);
+  Serial.println();
 }
