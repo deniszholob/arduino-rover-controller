@@ -11,19 +11,20 @@ There is a [recommended extension](.vscode/extensions.json) `adrianwilczynski.to
 * OR download a zip of the repo via the `Code` button on the upper left.
 
 There are several scripts for the rovers:
-
-The [NoLibraries](./src/NoLibraries/) folder contains scripts that use either existing or community libraries and can be opened/run as is.
+* The [scripts](./src/scripts/) folder contains scripts that use either existing or community libraries and can be opened/run as is.
 This is mostly following the original code guide from the Elegoo kit
-
-For the other scripts:
-* Copy the [src/libraries](./src/libraries/) to your [local arduino libraries](http://www.arduino.cc/en/Guide/Libraries)
-* You can open the library examples to test out the individual library features
-* Open the [RC_Control](./src/DDD_RC_Control/DDD_RC_Control.ino) script to control a car with an RC controller
+* The [libraries](./src/libraries) are arduino libraries, see the [libraries/README.md](./src/libraries/README.md) for more info
+* The [controllers](./src/controllers/) folder contains scripts that depend on the [libraries](./src/libraries)
+  * See the see the [libraries/README.md](./src/libraries/README.md) for more info
+  * But essentially you need to:
+    * Copy the [src/libraries](./src/libraries/) to your [local arduino libraries](http://www.arduino.cc/en/Guide/Libraries)
+    * You can open the library examples to test out the individual library features
+    * Open the [RC_Control](./src/DDD_RC_Control/DDD_RC_Control.ino) script to control a car with an RC controller
 
 
 ## With [Arduino IDE](https://www.arduino.cc/en/software)
 Make sure you can upload code in Arduino IDE first
-* Open the IDE then click `File` -> `Open...` (Browse to the [DDD_CarAutoMotion.ino](./src/NoLibraries/DDD_CarAutoMotion/DDD_CarAutoMotion.ino)
+* Open the IDE then click `File` -> `Open...` (Browse to the [DDD_CarAutoMotion.ino](./src/scripts/DDD_CarAutoMotion/DDD_CarAutoMotion.ino)
 * Connect your arduino via USB
 * `Tools` -> `Board` -> (Choose your board, this was coded for the `Arduino Uno`)
 * `Tools` -> `Programmer` -> Choose `AVRISP mkII` for the Nano

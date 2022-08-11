@@ -1,0 +1,7 @@
+DualHBridgeController KEYWORD1
+setHBridgePins        KEYWORD2
+setDebug              KEYWORD2
+setDeadband           KEYWORD2
+setTrim               KEYWORD2
+setReverseDirection   KEYWORD2
+activateMotors        KEYWORD2
