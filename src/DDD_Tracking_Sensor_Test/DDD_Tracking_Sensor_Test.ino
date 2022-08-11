@@ -9,8 +9,9 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
-#include <Arduino.h>
 #include "TrackingSensors.h"
+
+#include <Arduino.h>
 
 // ================================================================================================================
 // Declaring Objects
@@ -36,4 +37,3 @@ void loop() {
   Tracking_Sensors_Obj.readTrackingSensorValues(&track_sensor_vals);
   Tracking_Sensors_Obj.printTrackingSensorValues(&track_sensor_vals);
 }
-

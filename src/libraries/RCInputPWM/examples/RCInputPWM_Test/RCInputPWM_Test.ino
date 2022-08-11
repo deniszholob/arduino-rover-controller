@@ -11,8 +11,9 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
-#include <Arduino.h>
 #include "RCInputPWM.h"
+
+#include <Arduino.h>
 
 // ================================================================================================================
 // Declaring Variables
@@ -35,14 +36,15 @@ void setup() {
 // ================================================================================================================
 void loop() {
   readPWMIn(rx_pwm_signal);
-//  printRCPWMValues(); // From RCInputPWM.cpp
+  //  printRCPWMValues(); // From RCInputPWM.cpp
   printRCPWMValuesSimple();
 }
 
 // Prints out PWM Values for each channel
 void printRCPWMValuesSimple() {
-  for(int i = 0; i < RX_CHANNELS; i++){
-    if(i != 0) Serial.print(" - ");
+  for (int i = 0; i < RX_CHANNELS; i++) {
+    if (i != 0)
+      Serial.print(" - ");
     Serial.print(rx_pwm_signal[i]);
   }
   Serial.println();

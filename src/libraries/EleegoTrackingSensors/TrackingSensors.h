@@ -25,9 +25,9 @@
 
 // Structure to hold values for tracking sensors  Left, Middle, Right
 struct TrackSensorVals {
-  int L;
-  int M;
-  int R;
+    int L;
+    int M;
+    int R;
 };
 
 // Tracking Class holds functions to read and print sensor values

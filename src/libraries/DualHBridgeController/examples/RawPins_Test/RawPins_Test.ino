@@ -17,13 +17,13 @@
 // Declaring Constants
 // ================================================================================================================
 // Left Motor Pins
-#define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
-#define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple) 
-#define PIN_MOTOR_LEFT_LOGIC2  3  // IN2 (blue)   
+#define PIN_MOTOR_LEFT_SPEED  5 // ENA (gray)   (PWM req for variable speed)
+#define PIN_MOTOR_LEFT_LOGIC1 2 // IN1 (purple)
+#define PIN_MOTOR_LEFT_LOGIC2 3 // IN2 (blue)
 
 // Right Motor Pins
-#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)  
-#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow) 
+#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)
+#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow)
 #define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
 
 // ================================================================================================================
@@ -34,10 +34,10 @@ void setup() {
   Serial.begin(9600);
 
   // Setup the output pins
-  pinMode(PIN_MOTOR_LEFT_SPEED,   OUTPUT);
-  pinMode(PIN_MOTOR_LEFT_LOGIC1,  OUTPUT);
-  pinMode(PIN_MOTOR_LEFT_LOGIC2,  OUTPUT);
-  pinMode(PIN_MOTOR_RIGHT_SPEED,  OUTPUT);
+  pinMode(PIN_MOTOR_LEFT_SPEED, OUTPUT);
+  pinMode(PIN_MOTOR_LEFT_LOGIC1, OUTPUT);
+  pinMode(PIN_MOTOR_LEFT_LOGIC2, OUTPUT);
+  pinMode(PIN_MOTOR_RIGHT_SPEED, OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_LOGIC1, OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_LOGIC2, OUTPUT);
 }
@@ -66,7 +66,7 @@ void directionLoop(int motorSpeed, int motorLogic1, int motorLogic2) {
   // Forward
   Serial.println("Forward");
   analogWrite(motorSpeed, 200);
-//  digitalWrite(motorSpeed, 1);
+  //  digitalWrite(motorSpeed, 1);
   digitalWrite(motorLogic1, 1);
   digitalWrite(motorLogic2, 0);
   delay(2000);
@@ -80,7 +80,7 @@ void directionLoop(int motorSpeed, int motorLogic1, int motorLogic2) {
   // Backward
   Serial.println("Backward");
   analogWrite(motorSpeed, 100);
-//  digitalWrite(motorSpeed, 1);
+  //  digitalWrite(motorSpeed, 1);
   digitalWrite(motorLogic1, 0);
   digitalWrite(motorLogic2, 1);
   delay(2000);
