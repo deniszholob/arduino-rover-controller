@@ -13,6 +13,9 @@
 #include <Arduino.h>
 // #include "DualHBridgeController.h"
 
+// ================================================================================================================
+// Declaring Constants
+// ================================================================================================================
 // Left Motor Pins
 #define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
 #define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple) 
@@ -24,37 +27,19 @@
 #define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
 
 // ================================================================================================================
-// Declaring Constants (Magic numbers are BAD!)
-// ================================================================================================================
-// #define CAR_TRIM 50 // Compensate left turn
-
-// ================================================================================================================
-// Declaring Objects
-// ================================================================================================================
-// DualHBridgeController Car;
-
-// ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
 // ================================================================================================================
 void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
 
-  // Tell board which pins are used for h-bridge motor board
-  // Car.setHBridgePins();
-  
+  // Setup the output pins
   pinMode(PIN_MOTOR_LEFT_SPEED,   OUTPUT);
   pinMode(PIN_MOTOR_LEFT_LOGIC1,  OUTPUT);
   pinMode(PIN_MOTOR_LEFT_LOGIC2,  OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_SPEED,  OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_LOGIC1, OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_LOGIC2, OUTPUT);
-
-  // Trim the car so it goes straight if mechanical alignment of motors is off.
-  // Car.setTrim(CAR_TRIM);
-
-  // Motor board placed opposite car direction
-  // Car.setReverseDirection(true);
 }
 
 // ================================================================================================================
@@ -104,5 +89,5 @@ void directionLoop(int motorSpeed, int motorLogic1, int motorLogic2) {
   Serial.println("Break");
   digitalWrite(motorLogic1, 0);
   digitalWrite(motorLogic2, 0);
-  delay(2000);  
+  delay(2000);
 }

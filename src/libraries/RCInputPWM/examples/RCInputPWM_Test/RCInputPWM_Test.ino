@@ -11,6 +11,7 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include "RCInputPWM.h"
 
 // ================================================================================================================
@@ -24,7 +25,7 @@ int rx_pwm_signal[RX_CHANNELS];
 void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
-  
+
   // Tell board which pins are used for RC input
   setupRCPWMInterruptPins();
 }

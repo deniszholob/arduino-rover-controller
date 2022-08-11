@@ -1,0 +1,10 @@
+{
+  "editor.rulers": [
+    140
+  ],
+  "C_Cpp.clang_format_fallbackStyle": "Visual Studio",
+  "cSpell.words": [
+    "DEADBAND",
+    "Zholob"
+  ]
+}

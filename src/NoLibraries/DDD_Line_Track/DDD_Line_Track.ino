@@ -1,10 +1,16 @@
 /* ===================================
- * Car Line Traking Program
+ * Car Line Tracking Program
  * ===================================
- * Contains logic to move car along a traked line
+ * Contains logic to move car along a tracked line
  *
  * @author Denis Zholob
  */
+
+// ================================================================================================================
+// Importing Libraries
+// ================================================================================================================
+#include <Arduino.h>
+// #include "DualHBridgeController.h"
 
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
@@ -21,24 +27,26 @@
 #define PWM_MAX 2000        // Microseconds (us)
 
 // Analog Signals
-#define ANALOG_MIN 0        // 
-#define ANALOG_MID 127.5    // 
-#define ANALOG_MAX 255      // 
+#define ANALOG_MIN 0        //
+#define ANALOG_MID 127.5    //
+#define ANALOG_MAX 255      //
 
-// Traking Sensors (IR)
-#define PIN_TRAKING_SENSOR_R 11
-#define PIN_TRAKING_SENSOR_M 4
-#define PIN_TRAKING_SENSOR_L 2
+// Tracking Sensors (IR)
+#define PIN_TRACKING_SENSOR_R A2
+#define PIN_TRACKING_SENSOR_M A1
+#define PIN_TRACKING_SENSOR_L A0
 
-//Motor Pins
-#define PIN_MOTOR_LEFT_SPEED 5    // ENA
-#define PIN_MOTOR_LEFT_LOGIC1 6   // IN1
-#define PIN_MOTOR_LEFT_LOGIC2 7   // IN2
-#define PIN_MOTOR_RIGHT_LOGIC1 8  // IN3
-#define PIN_MOTOR_RIGHT_LOGIC2 9  // IN4
-#define PIN_MOTOR_RIGHT_SPEED 3   // ENB
+// Left Motor Pins
+#define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
+#define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple)
+#define PIN_MOTOR_LEFT_LOGIC2  3  // IN2 (blue)
 
-// Indecies for drive matrix below and car state
+// Right Motor Pins
+#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)
+#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow)
+#define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
+
+// Indicies for drive matrix below and car state
 #define CAR_STATE_STOP 0
 #define CAR_STATE_FORWARD 1
 #define CAR_STATE_BACK 2
@@ -51,7 +59,7 @@
 // ================================================================================================================
 // Declaring Variables
 // ================================================================================================================
-// IN1, IN2, IN3, IN4
+// {IN1, IN2, IN3, IN4}
 const int drive_state_matrix[5][4] = {
   {0, 0, 0, 0}, // CAR_STATE_STOP
   {0, 1, 0, 1}, // CAR_STATE_FORWARD: Left and Right go same direction
@@ -60,13 +68,13 @@ const int drive_state_matrix[5][4] = {
   {1, 0, 0, 1}  // CAR_STATE_LEFT: Right forward, Left Back
 };
 
-// Tracking sensor valsues  L, M, R
-// Index           			0  1  2
+// Tracking sensor values   L, M, R
+// Index                    0  1  2
 int track_sensor_vals[3] = {0, 0, 0};
 
 // Default PWM_MID values for safety (neutral, no movement)
-int rcInput[2]  = {PWM_MID}  // RC values range 1000us - 2000us
-int rcOutput[2] = {PWM_MID}  // RC values range 1000us - 2000us
+int rcInput[2]  = {PWM_MID};  // RC values range 1000us - 2000us
+int rcOutput[2] = {PWM_MID};  // RC values range 1000us - 2000us
 
 // ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
@@ -75,10 +83,10 @@ void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
 
-  // Traking IR Sensors
-  pinMode(PIN_TRAKING_SENSOR_R,   INTPUT);
-  pinMode(PIN_TRAKING_SENSOR_M,   INTPUT);
-  pinMode(PIN_TRAKING_SENSOR_L,   INTPUT);
+  // Tracking IR Sensors
+  pinMode(PIN_TRACKING_SENSOR_R,   INPUT);
+  pinMode(PIN_TRACKING_SENSOR_M,   INPUT);
+  pinMode(PIN_TRACKING_SENSOR_L,   INPUT);
 
   // Set the defined motor pins to the output
   pinMode(PIN_MOTOR_LEFT_SPEED,   OUTPUT);
@@ -91,7 +99,7 @@ void setup() {
   // Make sure the car is stopped initially for at least 3s.
   car_Stop();
   delay(3000);
-  
+
   // Set a constant speed for the car as there is no actual inputs
   rcInput[RC_THROTTLE] = PWM_MID + CAR_SPEED
 }
@@ -110,12 +118,12 @@ void loop() {
 // Algorithm to move the car along a painted line
 void carTrackLine(){
   int num1,num2,num3;
-  num1=digitalRead(11);    
-  num2=digitalRead(4);
-  num3=digitalRead(2); 
+  num1=digitalRead(PIN_TRACKING_SENSOR_R);
+  num2=digitalRead(PIN_TRACKING_SENSOR_M);
+  num3=digitalRead(PIN_TRACKING_SENSOR_L);
 
   if((num1==0)&&num2&&num3){
-    _mleft();               // The sensor detected that right car turn left immediately when it meets black line 
+    _mleft();               // The sensor detected that right car turn left immediately when it meets black line
     delay(2);
     while(1){
       num2=digitalRead(2);  // Cycle to judge degree of intermediate sensor,
@@ -134,7 +142,7 @@ void carTrackLine(){
     while(1){
       num2=digitalRead(2);
       if(num2==1){
-        _mright();  
+        _mright();
         delay(2);
       }
       else {
@@ -143,7 +151,7 @@ void carTrackLine(){
     }
   }
   else {
-    _mForward(); 
+    _mForward();
     delay(2);
   }
 }
@@ -158,7 +166,7 @@ int analogToPWM(int pwm){
   return map(pwm, PWM_MIN, PWM_MAX, ANALOG_MIN, ANALOG_MAX);
 }
 
-// Truns On/Off motors base on the valus on the drive_state_matrix
+// Turns On/Off motors based on the values in the drive_state_matrix
 // @param matrix_index Which drive mode to apply (integer value as index into the drive_state_matrix array)
 // @param duty_cycle value b/w 0-255 makes the motors spin slow or fast
 void activateMotors(int matrix_index, int duty_cycle_l, int duty_cycle_r){

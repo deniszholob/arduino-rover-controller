@@ -12,14 +12,17 @@
 #include <Arduino.h>
 
 // ================================================================================================================
-// Declaring Constants (Magic numbers are BAD!)
+// Declaring Constants
 // ================================================================================================================
-#define MOTOR_LEFT_SPEED_PIN 5    // ENA
-#define MOTOR_LEFT_LOGIC1_PIN 6   // IN1
-#define MOTOR_LEFT_LOGIC2_PIN 7   // IN2
-#define MOTOR_RIGHT_LOGIC1_PIN 8  // IN3
-#define MOTOR_RIGHT_LOGIC2_PIN 9  // IN4
-#define MOTOR_RIGHT_SPEED_PIN 10  // ENB
+// Left Motor Pins
+#define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
+#define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple) 
+#define PIN_MOTOR_LEFT_LOGIC2  3  // IN2 (blue)   
+
+// Right Motor Pins
+#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)  
+#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow) 
+#define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
 
 // Indicies for drive matrix below
 #define MATRIX_STOP 0
@@ -28,8 +31,8 @@
 #define MATRIX_RIGHT 3
 #define MATRIX_LEFT 4
 
-// IN1, IN2, IN3, IN4
-const int drive_matrix[5][4] = {
+// {IN1, IN2, IN3, IN4}
+const int drive_state_matrix[5][4] = {
   {0, 0, 0, 0}, // MATRIX_STOP
   {1, 0, 1, 0}, // MATRIX_FORWARD: Left and right go same direction
   {0, 1, 0, 1}, // MATRIX_BACK:    Left and Right go same direction
@@ -103,8 +106,8 @@ int getSpeed(int percent){
   return map(percent, 0, 100, 0, 255);
 }
 
-// Turns On/Off motors base on the values on the drive_matrix
-// @param matrix_index Which drive mode to apply (integer value as index into the drive_matrix array)
+// Turns On/Off motors base on the values on the drive_state_matrix
+// @param matrix_index Which drive mode to apply (integer value as index into the drive_state_matrix array)
 // @param duty_cycle value b/w 0-255 makes the motors spin slow or fast
 void activateMotors(int matrix_index, int duty_cycle){
   if(duty_cycle){
@@ -114,10 +117,10 @@ void activateMotors(int matrix_index, int duty_cycle){
     digitalWrite(MOTOR_LEFT_SPEED_PIN, 0);
     digitalWrite(MOTOR_RIGHT_SPEED_PIN, 0);
   }
-  digitalWrite(MOTOR_LEFT_LOGIC1_PIN, drive_matrix[matrix_index][0]);
-  digitalWrite(MOTOR_LEFT_LOGIC2_PIN, drive_matrix[matrix_index][1]);
-  digitalWrite(MOTOR_RIGHT_LOGIC1_PIN, drive_matrix[matrix_index][2]);
-  digitalWrite(MOTOR_RIGHT_LOGIC2_PIN, drive_matrix[matrix_index][3]);
+  digitalWrite(MOTOR_LEFT_LOGIC1_PIN, drive_state_matrix[matrix_index][0]);
+  digitalWrite(MOTOR_LEFT_LOGIC2_PIN, drive_state_matrix[matrix_index][1]);
+  digitalWrite(MOTOR_RIGHT_LOGIC1_PIN, drive_state_matrix[matrix_index][2]);
+  digitalWrite(MOTOR_RIGHT_LOGIC2_PIN, drive_state_matrix[matrix_index][3]);
 }
 
 // Stop the car
