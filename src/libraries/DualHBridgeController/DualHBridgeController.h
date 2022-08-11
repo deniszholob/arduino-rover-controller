@@ -1,7 +1,7 @@
 /* ===================================
  * Dual H-bridge motor controller library
  * ===================================
- * Contains functions to use with the IR Tracking Sensors
+ * Contains functions to control an h-bridge motor board
  *
  * @author Denis Zholob
  */

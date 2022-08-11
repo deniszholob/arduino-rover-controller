@@ -1,4 +1,4 @@
-# I298n Motor Driver
+# I298n H-Bridge Motor Driver
 
 ## Motor controller board states
 | ENA   | IN1   | IN2   | Result    |
@@ -9,5 +9,5 @@
 | 1     | 1     | 0     | Backward  |
 | 1     | 1     | 1     | Bark      |
 
-Pinout Diagram  
+Pinout Diagram
 ![Motor Controller Layout](../../../images/l298n-motor-controller-pinout.jpg)

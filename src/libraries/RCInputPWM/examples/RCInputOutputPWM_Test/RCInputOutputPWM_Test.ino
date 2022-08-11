@@ -11,6 +11,7 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include "RCInputPWM.h"
 #include "Servo.h"
 
@@ -47,7 +48,7 @@ Servo m1, m2, m3, s1, s2, s3;
 // ================================================================================================================
 // Setup routine: Runs once when you press reset or power on the board
 // ================================================================================================================
-void setup() {  
+void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
   // Tell board which pins are used for RC input
@@ -60,7 +61,7 @@ void setup() {
   s1.attach(PIN_S1);
   s2.attach(PIN_S2);
   s3.attach(PIN_S3);
-  
+
   // Do not go into the main loop unless throttle is low and RX is on
   setup_ThrottleSafety();
   // Start Loop
@@ -103,19 +104,19 @@ void setOutputSignals(){
   output_signal[5] = boundedPWM(rx_pwm_signal[1]);  // S3 - B
 }
 
-// 
+//
 int flipSignal(int pwm){
   return((pwm - PWM_MIN) / (PWM_MAX - PWM_MIN)) * (PWM_MIN - PWM_MAX) + PWM_MAX;
 }
 
-// 
+//
 int getCenterOffset(int pwm){
   if(pwm > PWM_MID) return pwm - PWM_MID;
   if(pwm > PWM_MID) return PWM_MID - pwm;
   return 0;
 }
 
-// 
+//
 int boundedPWM(int pwm){
   if(pwm > PWM_MAX) return PWM_MAX;
   if(pwm < PWM_MIN) return PWM_MIN;
@@ -131,7 +132,7 @@ void setup_ThrottleSafety(){
     m2.writeMicroseconds(PWM_MIN);
     delay(100);
     readPWMIn(rx_pwm_signal);
-    
+
   // Wait/Loop until the receiver is active and the throttle is set to the lower position.
   while(
     //rx_pwm_signal[2] < (990) ||    // RX is not ON (thus signal should be 0 as its hasn't caused interrupt)

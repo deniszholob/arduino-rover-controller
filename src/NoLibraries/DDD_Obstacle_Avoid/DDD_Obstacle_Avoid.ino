@@ -9,43 +9,46 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include <Servo.h> // Servo library
 
 // ================================================================================================================
-// Declaring Constants (Magic numbers are BAD!)
+// Declaring Constants
 // ================================================================================================================
 
 // Servo pins
 #define PIN_SERVO 10
 #define SERVO_RANGE_MAX 155 // Degrees 135deg = 2.0ms PWM
-#define SERVO_RANGE_MIN 25   // Degrees 45deg = 1.0ms PWM
-#define SERVO_RANGE_MID 90  // Degrees 90deg = 1.5ms PWM
+#define SERVO_RANGE_MIN 25  // Degrees 45deg  = 1.0ms PWM
+#define SERVO_RANGE_MID 90  // Degrees 90deg  = 1.5ms PWM
 #define SERVO_TRIM_OFFSET 8 // Degrees
 
 // Ultrasonics
 #define MAX_SENSORS 1        // The number of sensors
-#define MAX_RANGE 400 
+#define MAX_RANGE 400
 #define DISTANCE_AVG_COUNT 5 // Number of distance values to average
 #define DISTANCE_DRIVE_THRESHOLD 40
-#define PIN_ULTRASONIC_ECHO A4
-#define PIN_ULTRASONIC_TRIG A5
+#define PIN_ULTRASONIC_ECHO A4    // Echo (yellow)
+#define PIN_ULTRASONIC_TRIG A5    // Trigger (orange)
 
-//Motor Pins
-#define PIN_MOTOR_LEFT_SPEED 5    // ENA
-#define PIN_MOTOR_LEFT_LOGIC1 6   // IN1
-#define PIN_MOTOR_LEFT_LOGIC2 7   // IN2
-#define PIN_MOTOR_RIGHT_LOGIC1 8  // IN3
-#define PIN_MOTOR_RIGHT_LOGIC2 9  // IN4
-#define PIN_MOTOR_RIGHT_SPEED 3   // ENB
+// Left Motor Pins
+#define PIN_MOTOR_LEFT_SPEED   5  // ENA (gray)   (PWM req for variable speed)
+#define PIN_MOTOR_LEFT_LOGIC1  2  // IN1 (purple)
+#define PIN_MOTOR_LEFT_LOGIC2  3  // IN2 (blue)
 
-// Indecies for drive matrix below and car state
+// Right Motor Pins
+#define PIN_MOTOR_RIGHT_LOGIC1 9  // IN3 (green)
+#define PIN_MOTOR_RIGHT_LOGIC2 10 // IN4 (yellow)
+#define PIN_MOTOR_RIGHT_SPEED  6  // ENB (orange) (PWM req for variable speed)
+
+// Indicies for drive matrix below and car state
 #define CAR_STATE_STOP 0
 #define CAR_STATE_FORWARD 1
 #define CAR_STATE_BACK 2
 #define CAR_STATE_RIGHT 3
 #define CAR_STATE_LEFT 4
 
-#define CAR_SPEED 150             //130 Value range 0 - 255 
+#define CAR_SPEED 150             // 130 Value range 0 - 255
 
 // ================================================================================================================
 // Declaring Objects
@@ -55,7 +58,7 @@ Servo myservo; // create servo object to control servo
 // ================================================================================================================
 // Declaring Variables
 // ================================================================================================================
-// IN1, IN2, IN3, IN4
+// {IN1, IN2, IN3, IN4}
 const int drive_state_matrix[5][4] = {
   {0, 0, 0, 0}, // CAR_STATE_STOP
   {0, 1, 0, 1}, // CAR_STATE_FORWARD: Left and Right go same direction
@@ -88,7 +91,7 @@ void setup() {
   pinMode(PIN_MOTOR_RIGHT_LOGIC1, OUTPUT);
   pinMode(PIN_MOTOR_RIGHT_LOGIC2, OUTPUT);
 
-  // Set up the standard deviation filter threshholds
+  // Set up the standard deviation filter thresholds
   stdev_elim_threshold = malloc(MAX_RANGE * sizeof(int));
 
   // Create standard deviation thresholds
@@ -114,22 +117,22 @@ void loop() {
 // Helper Functions
 // ================================================================================================================
 
-// Algorithm to avaid obstacles in the car path as it moves forward
+// Algorithm to avoid obstacles in the car path as it moves forward
 void obstacleAvoid(){
-    // What is the distance ahead 
+    // What is the distance ahead
     lookStraight();
     delay(500);
     distance[0] = getUltrasonicDistance();
     Serial.print("    Distance Center: ");
     Serial.println(distance[0]);
 
-  // Check if way is clear if not, check left and right 
+  // Check if way is clear if not, check left and right
   if(distance[0] > DISTANCE_DRIVE_THRESHOLD - 10){
     car_Forward(CAR_SPEED - 30);
   }else{
     car_Stop();
     checkDistances();
-    
+
     // More distance to the right then left
     if(distance[1] > distance[2] && distance[1] > DISTANCE_DRIVE_THRESHOLD/2){
       car_Right(CAR_SPEED + 20);
@@ -147,7 +150,7 @@ void obstacleAvoid(){
       delay(500);
       car_Stop();
       checkDistances();
-      
+
       // More distance to the right then left
       if(distance[1] > distance[2] && distance[1] > DISTANCE_DRIVE_THRESHOLD/2){
         car_Right(CAR_SPEED + 10);
@@ -263,9 +266,9 @@ int emaFilter(int sensor, int current) {
     ema = current;
     initialized[sensor] = 1;
   }
-  
+
   // If the initialized flag has already been set, then there was a prior value.
-  // We can now use the recursive formula to calculate the EMA. 
+  // We can now use the recursive formula to calculate the EMA.
   else {
     ema = (alpha * current + (1 - alpha) * lastema[sensor]);
   }
@@ -322,7 +325,7 @@ int getSpeed(int percent){
   return map(percent, 0, 100, 0, 255);
 }
 
-// Truns On/Off motors base on the valus on the drive_state_matrix
+// Turns On/Off motors base on the values on the drive_state_matrix
 // @param matrix_index Which drive mode to apply (integer value as index into the drive_state_matrix array)
 // @param duty_cycle value b/w 0-255 makes the motors spin slow or fast
 void activateMotors(int matrix_index, int duty_cycle){
@@ -371,18 +374,18 @@ void car_Left(int duty_cycle){
 
 // Turns Servo to center
 void lookStraight(){
-  myservo.write(SERVO_RANGE_MID - SERVO_TRIM_OFFSET); // setservo position according to scaled value
+  myservo.write(SERVO_RANGE_MID - SERVO_TRIM_OFFSET); // set servo position according to scaled value
 //  delay(500);                     // Wait half a sec
 }
 
 // Turns Servo left
 void lookLeft(){
-  myservo.write(SERVO_RANGE_MAX - SERVO_TRIM_OFFSET); // setservo position according to scaled value
+  myservo.write(SERVO_RANGE_MAX - SERVO_TRIM_OFFSET); // set servo position according to scaled value
 //  delay(500);                     // Wait half a sec
 }
 
 // Turns Servo Right
 void lookRight(){
-  myservo.write(SERVO_RANGE_MIN - SERVO_TRIM_OFFSET); // setservo position according to scaled value
+  myservo.write(SERVO_RANGE_MIN - SERVO_TRIM_OFFSET); // set servo position according to scaled value
 //  delay(500);                     // Wait half a sec
 }

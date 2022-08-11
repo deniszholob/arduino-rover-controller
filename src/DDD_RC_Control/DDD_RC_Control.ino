@@ -1,9 +1,7 @@
 /* ===================================
- * RC PWM Input library
+ * RC Controller
  * ===================================
- * Tests the RC input by printing it out on serial
- * Verify correct values by moving transmitter sticks
- * Modify the library to change pins (coded this way for max speed)
+ * Use to drive a rover with an RC controller
  *
  * @author Denis Zholob
  */
@@ -11,6 +9,7 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include "RCInputPWM.h"
 #include "DualHBridgeController.h"
 #include "Servo.h"
@@ -81,7 +80,7 @@ void loop() {
   } else {
     // Read RC Input
     readPWMIn(rx_pwm_signal);
-    
+
     // Move servo
     servoSonic.writeMicroseconds(flipSignal(rx_pwm_signal[RC_IDX_SERVO]));
     // Serial.print("Servo: ");

@@ -13,8 +13,9 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include "IRremote.h"
- 
+
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
 // ================================================================================================================
@@ -46,7 +47,7 @@
 #define MOTOR_RIGHT_LOGIC2_PIN 9  // IN4
 #define MOTOR_RIGHT_SPEED_PIN 10  // ENB
 
-// Indecies for drive matrix below and car state
+// Indicies for drive matrix below and car state
 #define CAR_STATE_STOP 0
 #define CAR_STATE_FORWARD 1
 #define CAR_STATE_BACK 2
@@ -63,7 +64,7 @@ decode_results results;            // create instance of 'decode_results'
 // Declaring Variables
 // ================================================================================================================
 
-// IN1, IN2, IN3, IN4
+// {IN1, IN2, IN3, IN4}
 const int drive_state_matrix[5][4] = {
   {0, 0, 0, 0}, // CAR_STATE_STOP
   {0, 1, 0, 1}, // CAR_STATE_FORWARD: Left and Right go same direction
@@ -81,7 +82,7 @@ int turn_speed_percent = turn_speed_matrix[0];
 int curState = CAR_STATE_STOP;  // Current car drive state, stopped by default
 int prevState = CAR_STATE_STOP; // Previous car drive state, stopped by default
 
-#define timeout_delay 250000  // milliseconds - I'm guessing here, this needs to be longer than the IR repeat interval 
+#define timeout_delay 250000  // milliseconds - I'm guessing here, this needs to be longer than the IR repeat interval
 unsigned long loop_timer;
 
 // ================================================================================================================
@@ -90,7 +91,7 @@ unsigned long loop_timer;
 void setup() {
   // Open the serial port and set the baud rate to 9600
   Serial.begin(9600);
-   
+
   // Set the defined pins to the output
   pinMode(MOTOR_LEFT_SPEED_PIN,   OUTPUT);
   pinMode(MOTOR_LEFT_LOGIC1_PIN,  OUTPUT);
@@ -102,7 +103,7 @@ void setup() {
   // Make sure the car is stopped initially.
   car_Stop();
 
-  // Start IR Reciever
+  // Start IR Receiver
   irrecv.enableIRIn();
   loop_timer = micros();                             // Set the loop_timer for the first loop.
 }
@@ -204,8 +205,8 @@ void irLogic(){
       default:                   Serial.println("IR other button  ");
     }
     irrecv.resume();              // receive the next value
-  } 
-//  else { 
+  }
+//  else {
 //    Serial.println("NO IR");
 //    prevState = curState;
 //    curState = CAR_STATE_STOP;

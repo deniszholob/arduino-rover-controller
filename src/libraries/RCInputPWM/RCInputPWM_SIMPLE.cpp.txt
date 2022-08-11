@@ -1,7 +1,7 @@
 /* ===================================
  * RC PWM Input library
  * ===================================
- * Reads PWM inputs from RC reciever
+ * Reads PWM inputs from RC receiver
  *
  * @author Denis Zholob
  *

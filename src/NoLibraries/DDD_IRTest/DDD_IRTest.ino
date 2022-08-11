@@ -5,7 +5,7 @@
  * v1.0
  * @author Denis Zholob
  * based on code from https://arduino-info.wikispaces.com/IR-RemoteControl
- * 
+ *
  * Required Libraries:
  *    Arduino-IRremote by Ken Shirriff
  *    https://github.com/shirriff/Arduino-IRremote
@@ -14,8 +14,9 @@
 // ================================================================================================================
 // Importing Libraries
 // ================================================================================================================
+#include <Arduino.h>
 #include "IRremote.h"
- 
+
 // ================================================================================================================
 // Declaring Constants (Magic numbers are BAD!)
 // ================================================================================================================
@@ -54,7 +55,7 @@ void setup() {
   Serial.begin(9600);
 
   Serial.println("Arduino IR Receiver Button Decode Test");
-  
+
   // Start IR Reciever
   irrecv.enableIRIn();
 }
@@ -67,7 +68,7 @@ void loop() {
     // Serial.println(results.value, HEX);   // UNcomment to see raw values
     translateIR();                        // Prints button press
     irrecv.resume();                      // receive the next value
-  }  
+  }
 }
 
 // ================================================================================================================
@@ -76,7 +77,7 @@ void loop() {
 
 // takes action based on IR code received
 void translateIR() {
-  // describing KEYES Remote IR codes 
+  // describing KEYS Remote IR codes
   switch(results.value){
     case IR_CODE_UP_ARROW:     Serial.println(" FORWARD"); break;
     case IR_CODE_DOWN_ARROW:   Serial.println(" REVERSE"); break;
